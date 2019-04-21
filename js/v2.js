@@ -5,7 +5,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
     var margin = {
         top: 85,
         right: 50,
-        bottom: 50,
+        bottom: 85,
         left: 50
     };
 
@@ -31,9 +31,18 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .style("text-anchor", "middle")
         .attr("y", -margin.top / 2 + 8)  // above chart
         .attr("x", width / 2)
-        .text("Recorded Fatalities");
+        .text("Substantial Damage Events");
+
+    svg.append("text")
+        .attr("class", "tip")
+        .style("text-anchor", "middle")
+        .attr("y", height + (margin.bottom / 2) + 10)  // below chart
+        .attr("x", width / 2)
+        .text("Tip: Use the scroll wheel to zoom, and drag to pan.");
     
-    incident_data = incident_data.map(function(d) {
+    incident_data = incident_data.filter(function(d) {
+        return d.Aircraft_Damage == 'Destroyed' || d.Aircraft_Damage == 'Substantial';
+    }).map(function(d) {
         d.date = parseDate(d.Event_Date)
         return d;
     });
