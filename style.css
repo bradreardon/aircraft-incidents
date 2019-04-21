@@ -75,3 +75,18 @@ footer {
 	font-size: 16pt;
 	font-weight: bold;
 }
+
+
+rect.zoom-panel {
+	/* v2 */
+    cursor: move;
+    fill: #fff;
+    fill-opacity: 0;
+    pointer-events: all;
+}
+
+.tip {
+	font-size: 10pt;
+	font-style: oblique;
+	color: #ccc;
+}

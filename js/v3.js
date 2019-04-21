@@ -51,7 +51,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .style('text-anchor', 'middle')
         .style('text-transform', 'uppercase')
         .style('font-weight', 'bolder')
-        .attr('font-size', '16pt')
+        .attr('font-size', '24pt')
         .attr('x', width / 2)
         .attr('y', 100)
         .text('VMC');
@@ -156,7 +156,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .style('text-anchor', 'middle')
         .style('text-transform', 'uppercase')
         .style('font-weight', 'bolder')
-        .attr('font-size', '16pt')
+        .attr('font-size', '24pt')
         .attr('x', width / 2)
         .attr('y', 100)
         .text('IMC');

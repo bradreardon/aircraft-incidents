@@ -17,7 +17,14 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(
+            d3.zoom()
+                .translateExtent([[0,0], [width, height]])
+                .scaleExtent([1, 12])
+                .extent([[0, 0], [width, height]])
+                .on('zoom', zoom)
+        );
 
     svg.append("text")
         .attr("class", "title")
@@ -34,7 +41,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
     // set the ranges
     var x = d3.scaleTime()
               .domain(d3.extent(incident_data, function(d) { return d.date; }))
-              .rangeRound([0, width]);
+              .range([0, width]);
     var y = d3.scaleLinear()
               .range([height, 0]);
 
@@ -50,23 +57,67 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
     // Scale the range of the data in the y domain
     y.domain([0, d3.max(bins, function(d) { return d.length; })]);
 
+    // zoom box
+    svg.append('rect')
+        .attr('class', 'zoom-panel')
+        .attr('width', width)
+        .attr('height', height)
+
     // append the bar rectangles to the svg element
-    svg.selectAll("rect")
+    var bars = svg.append('g')
+        .attr('clip-path', 'url(#v2-clip-path)')
+        .selectAll("rect")
         .data(bins)
         .enter().append("rect")
             .attr("class", "bar")
-            .attr("x", 1)
-            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-            .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+            // .attr("x", 1)
+            .attr("x", function(d) { return x(d.x0); })
+            .attr("y", function(d) { return y(d.length); })
+            .attr("fill", "steelblue")
+            .attr("width", function(d) { return x(d.x1) - x(d.x0) - 1 ; })
             .attr("height", function(d) { return height - y(d.length); });
 
+    var defs = svg.append('defs');
+
+    // use clipPath
+    defs.append('clipPath')
+        .attr('id', 'v2-clip-path')
+        .append('rect')
+        .attr('width', width)
+        .attr('height', height)
+
+
     // add the x Axis
-    svg.append("g")
+    var xAxis = svg.append("g")
+        .attr('class', 'xAxis')
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x));
 
     // add the y Axis
-    svg.append("g")
-        .call(d3.axisLeft(y));
+    svg.append("g").call(d3.axisLeft(y));
+
+    let hideTicksWithoutLabel = function() {
+      d3.selectAll('.xAxis .tick text').each(function(d){
+        if(this.innerHTML === '') {
+          this.parentNode.style.display = 'none'
+        }
+      })
+    }
+
+    function zoom() {
+      if (d3.event.transform.k < 1) {
+        d3.event.transform.k = 1
+        return
+      }
+
+      xAxis.call(
+        d3.axisBottom(d3.event.transform.rescaleX(x))
+      )
+
+      hideTicksWithoutLabel()
+
+      // the bars transform
+      bars.attr("transform", "translate(" + d3.event.transform.x + ",0)scale(" + d3.event.transform.k + ",1)")
+    }
 
 });
