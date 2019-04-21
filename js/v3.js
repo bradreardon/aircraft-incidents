@@ -7,7 +7,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         left: 50
     };
 
-    var width = 550 - margin.left - margin.right,
+    var width = 400 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
     var radius = (Math.min(width, height - 150)) / 2;

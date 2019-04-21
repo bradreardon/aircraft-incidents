@@ -10,13 +10,13 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         })
         .entries(incident_data);
 
-    aircraftDataTop15 = aircraftData.sort(function (a, b) {
+    aircraftDataTop = aircraftData.sort(function (a, b) {
         return d3.descending(a.value.incidents, b.value.incidents);
-    }).slice(0, 15) // select top 15 for chart 1
+    }).slice(0, 20) // select top 20 for chart 1
 
-    aircraftDataTop15Destroyed = aircraftData.sort(function (a, b) {
+    aircraftDataTopDestroyed = aircraftData.sort(function (a, b) {
         return d3.descending(a.value.destroyed, b.value.destroyed);
-    }).slice(0, 15) // select top 15 destroyed aircraft for chart 1
+    }).slice(0, 20) // select top 20 destroyed aircraft for chart 1
 
 
     // set margins & dimensions for both charts
@@ -48,14 +48,14 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
 
     var x = d3.scaleLinear()
         .range([0, width])
-        .domain([0, d3.max(aircraftDataTop15, function (d) {
+        .domain([0, d3.max(aircraftDataTop, function (d) {
             return d.value.incidents;
         })]);
 
     var y = d3.scaleBand()
         .rangeRound([0, height], .1)
         .padding(.2)
-        .domain(aircraftDataTop15.map(function (d) {
+        .domain(aircraftDataTop.map(function (d) {
             return d.key;
         }));
 
@@ -64,7 +64,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .tickSizeInner(5)
         .tickSizeOuter(0);
 
-    var colorScale = d3.scaleSequential(d3.interpolateBlues).domain([aircraftDataTop15.length * 2, 0]);
+    var colorScale = d3.scaleSequential(d3.interpolateBlues).domain([aircraftDataTop.length * 2, 0]);
 
     // create a tooltip
     var Tooltip = d3.select("#wrapper")
@@ -112,7 +112,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .call(yAxis)
 
     var bars = svg.selectAll(".bar")
-        .data(aircraftDataTop15)
+        .data(aircraftDataTop)
         .enter()
         .append("g")
 
@@ -165,14 +165,14 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
 
     var x = d3.scaleLinear()
         .range([0, width])
-        .domain([0, d3.max(aircraftDataTop15Destroyed, function (d) {
+        .domain([0, d3.max(aircraftDataTopDestroyed, function (d) {
             return d.value.destroyed;
         })]);
 
     var y = d3.scaleBand()
         .rangeRound([0, height], .1)
         .padding(.2)
-        .domain(aircraftDataTop15Destroyed.map(function (d) {
+        .domain(aircraftDataTopDestroyed.map(function (d) {
             return d.key;
         }));
 
@@ -181,7 +181,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .tickSizeInner(5)
         .tickSizeOuter(0);
 
-    var colorScale = d3.scaleSequential(d3.interpolateReds).domain([aircraftDataTop15Destroyed.length * 2, 0]);
+    var colorScale = d3.scaleSequential(d3.interpolateReds).domain([aircraftDataTopDestroyed.length * 2, 0]);
 
     // create a tooltip
     var Tooltip = d3.select("#wrapper")
@@ -229,7 +229,7 @@ d3.csv("aircraft_incidents.csv", function(incident_data) {
         .call(yAxis)
 
     var bars = svg.selectAll(".bar")
-        .data(aircraftDataTop15Destroyed)
+        .data(aircraftDataTopDestroyed)
         .enter()
         .append("g")
 
