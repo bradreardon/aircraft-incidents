@@ -2,14 +2,17 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/> 
-		<title>CS 4460: Project 5</title>
+		<title>Aircraft Incidents</title>
 		<link href="style.css" type="text/css" rel="stylesheet" />
 
 		<!-- Prereqs: vendor -->
-		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="//d3js.org/d3.v4.min.js"></script>
 		<script src="//d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
 
 		<link href="https://fonts.googleapis.com/css?family=Oleo+Script" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css" integrity="sha384-QokYePQSOwpBDuhlHOsX0ymF6R/vLk/UQVz3WHa6wygxI5oGTmDTv8wahFOSspdm" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/fontawesome.css" integrity="sha384-vd1e11sR28tEK9YANUtpIOdjGW14pS87bUBuOIoBILVWLFnS+MCX9T6MMf0VdPGq" crossorigin="anonymous">
    	</head>
    	<body>
 	   	<div id="wrapper">
@@ -47,14 +50,34 @@
 			<script type="text/javascript" src="js/v1.js"></script>
 
 	   		<section class='story'>
-	   			<h1 class='lead'>Next section?</h1>
+	   			<h1 class='lead'>Next section? Recorded Fatalities</h1>
 	   			<p>
 	   				You bet!
 	   			</p>
 	    	</section>
 
 			<div id="v2" class="vis">
+				<!-- fatalities over time chart -->
 	    	</div>
+			<script type="text/javascript" src="js/v2.js"></script>
+
+	   		<section class='story'>
+	   			<h1 class='lead'>What about weather?</h1>
+	   			<p>
+	   				Frequent fliers are familiar with turbulence on long flights over large storm systems. For those with weak stomachs, a turbluent trip could inspire feelings of doom. However, is it actually any less safe to fly in bad weather with today's airplanes and flight technology?
+	   			</p>
+	   			<p>
+	   				In this section, we compare the data of incident events during visual meteorological conditions (VMC), or flights in weather with good visibility, versus events during instrument meteorological conditions (IMC), which are flights that require pilots to utilize flight instruments to navigate in areas of poor visibility. Some cases did not have weather conditions recorded, so for this section, those cases will be excluded.
+	   			</p>
+	   			<p>
+	   				In addition, severe weather conditions often cause the most issues during the critical phases of flight, being takeoff and landing. Let's look at how weather conditions affect the critical phases of flight. Hover over the below donut charts to see which phases of flight are most incident-inducing for both VMC and IMC.
+	   			</p>
+	    	</section>
+
+			<div id="v3" class="vis">
+				<!-- imc vs vmc -->
+	    	</div>
+			<script type="text/javascript" src="js/v3.js"></script>
 
 	   		<section class='story'>
 	   			<h1 class='lead'>Next section?</h1>
@@ -63,8 +86,10 @@
 	   			</p>
 	    	</section>
 
-			<div id="v3" class="vis">
+			<div id="v4" class="vis">
+				<!-- flight phases -->
 	    	</div>
+			<!-- <script type="text/javascript" src="js/v4.js"></script> -->
 
 	    	<div class='divider'></div>
 
